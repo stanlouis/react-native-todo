@@ -35,6 +35,23 @@ export default class App extends Component {
     });
   };
 
+  deleteTodo = todoIndex => {
+    let { todos } = this.state;
+    this.setState({
+      todos: todos.filter(todo => todo.todoIndex !== todoIndex),
+    });
+  };
+
+  toggleComplete = todoIndex => {
+    let { todos } = this.state;
+    todos.forEach(todo => {
+      if (todo.todoIndex === todoIndex) {
+        todo.complete = !todo.complete;
+      }
+    });
+    this.setState({ todos });
+  };
+
   render() {
     const { inputValue, todos } = this.state;
 
@@ -46,7 +63,11 @@ export default class App extends Component {
             inputValue={inputValue}
             inputChange={text => this.inputChange(text)}
           />
-          <TodoList todos={todos} />
+          <TodoList
+            todos={todos}
+            toggleComplete={this.toggleComplete}
+            deleteTodo={this.deleteTodo}
+          />
           <Button submitTodo={this.submitTodo} />
         </ScrollView>
       </View>
