@@ -4,6 +4,7 @@ import Heading from './Heading';
 import Input from './Input';
 import Button from './Button';
 import TodoList from './TodoList';
+import TabBar from './TabBar';
 
 let todoIndex = 0;
 
@@ -11,7 +12,7 @@ export default class App extends Component {
   state = {
     inputValue: '',
     todos: [],
-    type: 'ALL',
+    type: 'All',
   };
 
   inputChange = inputValue => {
@@ -52,8 +53,10 @@ export default class App extends Component {
     this.setState({ todos });
   };
 
+  setType = type => this.setState({ type });
+
   render() {
-    const { inputValue, todos } = this.state;
+    const { inputValue, todos, type } = this.state;
 
     return (
       <View style={styles.container}>
@@ -64,12 +67,14 @@ export default class App extends Component {
             inputChange={text => this.inputChange(text)}
           />
           <TodoList
+            type={type}
             todos={todos}
             toggleComplete={this.toggleComplete}
             deleteTodo={this.deleteTodo}
           />
           <Button submitTodo={this.submitTodo} />
         </ScrollView>
+        <TabBar type={type} setType={this.setType} />
       </View>
     );
   }
